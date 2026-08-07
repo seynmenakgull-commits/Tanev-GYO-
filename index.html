@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#121214">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #121214;
@@ -39,7 +39,7 @@
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         
         .logo-box { display: flex; align-items: center; text-decoration: none; cursor: pointer; user-select: none; }
-        .logo-svg { height: 46px; width: auto; }
+        .logo-svg { height: 48px; width: auto; }
         
         .admin-controls { display: flex; gap: 10px; align-items: center; }
         .add-btn { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; border: none; padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.85rem; cursor: pointer; display: none; }
@@ -86,23 +86,27 @@
         .form-control { width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-white); font-size: 0.95rem; outline: none; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-submit { width: 100%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; padding: 14px; border: none; border-radius: var(--radius-sm); font-size: 1rem; cursor: pointer; margin-top: 10px; }
-        .file-input-wrapper { display: flex; gap: 10px; align-items: center; }
-        .file-input-wrapper input[type="file"] { color: var(--text-muted); font-size: 0.85rem; }
+        
+        .file-input-wrapper { display: flex; flex-direction: column; gap: 8px; }
+        .file-input-wrapper input[type="file"] { color: var(--text-muted); font-size: 0.85rem; background: var(--bg-input); padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
+        #imgPreview { width: 100px; height: 70px; object-fit: cover; border-radius: 6px; display: none; border: 1px solid var(--gold-primary); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="nav-container">
-            <!-- Gönderdiğiniz Fotoğraftaki Özel Tasarımlı TANEV GYO Logosu -->
+            <!-- Gönderdiğiniz Fotoğraftaki Kusursuz TANEV GYO Logosu -->
             <div class="logo-box" id="secretLogo" title="TANEV GYO">
-                <svg class="logo-svg" viewBox="0 0 310 75" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Sol Altın Amblem -->
-                    <path d="M 12 12 L 48 12 C 48 12, 38 24, 25 38 C 16 48, 14 62, 14 62 C 14 62, 22 46, 35 34 C 46 23, 56 16, 56 16 L 12 16 Z" fill="url(#gold-grad)"/>
-                    <path d="M 24 28 L 52 28 C 52 28, 44 38, 33 49 C 25 57, 22 66, 22 66 C 22 66, 28 55, 38 45 C 47 36, 58 28, 58 28 L 24 28 Z" fill="url(#gold-grad)" opacity="0.85"/>
-                    <!-- Sağ Beyaz Yazılar (TANEV / GYO Alt Alta) -->
-                    <text x="75" y="36" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="800" font-size="28" letter-spacing="2.5">TANEV</text>
-                    <text x="110" y="65" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="800" font-size="24" letter-spacing="3.5">GYO</text>
+                <svg class="logo-svg" viewBox="0 0 240 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sol Altın Eğimli Çift Çizgi Simgesi -->
+                    <path d="M 5 10 L 45 10 C 45 10, 36 20, 24 33 C 14 44, 11 58, 11 58 C 11 58, 18 43, 31 31 C 42 20, 52 13, 52 13 L 5 13 Z" fill="url(#gold-grad)"/>
+                    <path d="M 17 26 L 48 26 C 48 26, 40 36, 29 47 C 21 55, 18 63, 18 63 C 18 63, 24 53, 34 43 C 43 34, 53 26, 53 26 L 17 26 Z" fill="url(#gold-grad)" opacity="0.9"/>
+                    
+                    <!-- Sağ Beyaz Yazılar: TANEV üstte, GYO altta -->
+                    <text x="65" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="900" font-size="26" letter-spacing="2">TANEV</text>
+                    <text x="95" y="60" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="900" font-size="22" letter-spacing="3">GYO</text>
+                    
                     <defs>
                         <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#F3E5AB"/>
@@ -175,11 +179,12 @@
                     <input type="text" id="propLocation" class="form-control" placeholder="Örn: Şehitkamil / Batıkent" required>
                 </div>
                 
-                <!-- Galeriden Fotoğraf Seçme -->
+                <!-- Galeriden Fotoğraf Seçme Alanı -->
                 <div class="form-group">
                     <label class="form-label">İlan Fotoğrafı (Galeriden Seç)</label>
                     <div class="file-input-wrapper">
                         <input type="file" id="imageFile" accept="image/*" onchange="handleImageUpload(event)">
+                        <img id="imgPreview" alt="Önizleme">
                     </div>
                 </div>
 
@@ -248,12 +253,16 @@
             }
         }
 
+        // Galeriden seçilen fotoğrafı işleme ve önizleme gösterme
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('propImageBase64').value = e.target.result;
+                    const preview = document.getElementById('imgPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             }
@@ -280,7 +289,7 @@
                         </div>
                         <p class="card-desc">${item.desc}</p>
                         <div class="card-actions ${isAdmin ? 'admin-mode' : ''}">
-                            <button class="btn-action btn-edit" onclick="editProperty(${item.id})">✏️ Düzenle</button>
+                            <button class="btn-action btn-edit" onclick="editProperty(${item.id})">✏️ Düzenle</label>
                             <button class="btn-action btn-delete" onclick="deleteProperty(${item.id})">🗑️</button>
                         </div>
                     </div>`;
@@ -292,6 +301,7 @@
             document.getElementById('propertyForm').reset(); 
             document.getElementById('propId').value = ''; 
             document.getElementById('propImageBase64').value = '';
+            document.getElementById('imgPreview').style.display = 'none';
             document.getElementById('modalTitle').textContent = 'Yeni İlan Ekle';
             document.getElementById('propertyModal').classList.add('active'); 
         }
@@ -312,6 +322,11 @@
             document.getElementById('propLocation').value = item.location;
             document.getElementById('propImageBase64').value = item.image;
             document.getElementById('propDesc').value = item.desc;
+            
+            const preview = document.getElementById('imgPreview');
+            preview.src = item.image;
+            preview.style.display = 'block';
+
             document.getElementById('modalTitle').textContent = 'İlanı Düzenle';
             document.getElementById('propertyModal').classList.add('active');
         }
