@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#121214">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #121214;
@@ -34,12 +34,12 @@
             top: 0; 
             z-index: 1000; 
             border-bottom: 1px solid var(--border-color); 
-            padding: 12px 16px; 
+            padding: 10px 16px; 
         }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         
         .logo-box { display: flex; align-items: center; text-decoration: none; cursor: pointer; user-select: none; }
-        .logo-svg { height: 50px; width: auto; }
+        .logo-svg { height: 46px; width: auto; }
         
         .admin-controls { display: flex; gap: 10px; align-items: center; }
         .add-btn { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; border: none; padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.85rem; cursor: pointer; display: none; }
@@ -86,23 +86,23 @@
         .form-control { width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-white); font-size: 0.95rem; outline: none; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-submit { width: 100%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; padding: 14px; border: none; border-radius: var(--radius-sm); font-size: 1rem; cursor: pointer; margin-top: 10px; }
+        .file-input-wrapper { display: flex; gap: 10px; align-items: center; }
+        .file-input-wrapper input[type="file"] { color: var(--text-muted); font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="nav-container">
-            <!-- Logoya basılı tutunca gizli giriş çalışacak -->
+            <!-- Gönderdiğiniz Fotoğraftaki Özel Tasarımlı TANEV GYO Logosu -->
             <div class="logo-box" id="secretLogo" title="TANEV GYO">
-                <svg class="logo-svg" viewBox="0 0 380 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="Symbol">
-                        <path d="M 10 18 C 10 18, 55 18, 75 18 C 65 30, 52 42, 32 60 C 22 70, 20 85, 20 85 C 20 85, 30 65, 45 50 C 65 30, 85 18, 85 18 L 10 18 Z" fill="url(#gold-grad)"/>
-                        <path d="M 30 38 C 30 38, 58 38, 70 38 C 60 50, 48 62, 35 75 C 28 82, 25 90, 25 90 C 25 90, 32 78, 45 65 C 60 50, 78 38, 78 38 L 30 38 Z" fill="url(#gold-grad)"/>
-                    </g>
-                    <g id="Text">
-                        <text x="105" y="44" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="900" font-size="34" letter-spacing="3">TANEV</text>
-                        <text x="145" y="80" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="900" font-size="34" letter-spacing="4">GYO</text>
-                    </g>
+                <svg class="logo-svg" viewBox="0 0 310 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sol Altın Amblem -->
+                    <path d="M 12 12 L 48 12 C 48 12, 38 24, 25 38 C 16 48, 14 62, 14 62 C 14 62, 22 46, 35 34 C 46 23, 56 16, 56 16 L 12 16 Z" fill="url(#gold-grad)"/>
+                    <path d="M 24 28 L 52 28 C 52 28, 44 38, 33 49 C 25 57, 22 66, 22 66 C 22 66, 28 55, 38 45 C 47 36, 58 28, 58 28 L 24 28 Z" fill="url(#gold-grad)" opacity="0.85"/>
+                    <!-- Sağ Beyaz Yazılar (TANEV / GYO Alt Alta) -->
+                    <text x="75" y="36" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="800" font-size="28" letter-spacing="2.5">TANEV</text>
+                    <text x="110" y="65" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="800" font-size="24" letter-spacing="3.5">GYO</text>
                     <defs>
                         <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#F3E5AB"/>
@@ -136,6 +136,8 @@
             </div>
             <form id="propertyForm" onsubmit="saveProperty(event)">
                 <input type="hidden" id="propId">
+                <input type="hidden" id="propImageBase64">
+                
                 <div class="form-group">
                     <label class="form-label">İlan Başlığı</label>
                     <input type="text" id="propTitle" class="form-control" placeholder="Örn: Cadde Üzeri Devren İşyeri" required>
@@ -172,10 +174,15 @@
                     <label class="form-label">Konum (İlçe / Mahalle)</label>
                     <input type="text" id="propLocation" class="form-control" placeholder="Örn: Şehitkamil / Batıkent" required>
                 </div>
+                
+                <!-- Galeriden Fotoğraf Seçme -->
                 <div class="form-group">
-                    <label class="form-label">Görsel Bağlantısı (URL)</label>
-                    <input type="url" id="propImage" class="form-control" placeholder="https://..." required>
+                    <label class="form-label">İlan Fotoğrafı (Galeriden Seç)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="imageFile" accept="image/*" onchange="handleImageUpload(event)">
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label">Açıklama</label>
                     <textarea id="propDesc" class="form-control" rows="3" placeholder="İlan detaylarını buraya yazın..."></textarea>
@@ -206,7 +213,7 @@
             renderListings();
         }
 
-        // Gizli Giriş: Logoya 2 saniye basılı tutunca çalışır
+        // Gizli Giriş: Logoya 2 saniye basılı tutunca şifre ekranı açılır
         const secretLogo = document.getElementById('secretLogo');
         let pressTimer;
         
@@ -215,7 +222,6 @@
         });
         secretLogo.addEventListener('touchend', () => { clearTimeout(pressTimer); });
         
-        // Bilgisayardan bakanlar için sağ tık veya uzun basma alternatifi
         secretLogo.addEventListener('mousedown', () => {
             pressTimer = setTimeout(() => { triggerAdminLogin(); }, 2000);
         });
@@ -239,6 +245,17 @@
                 } else if (password !== null) {
                     alert('Hatalı şifre!');
                 }
+            }
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('propImageBase64').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
         }
 
@@ -274,6 +291,7 @@
         function openModal() { 
             document.getElementById('propertyForm').reset(); 
             document.getElementById('propId').value = ''; 
+            document.getElementById('propImageBase64').value = '';
             document.getElementById('modalTitle').textContent = 'Yeni İlan Ekle';
             document.getElementById('propertyModal').classList.add('active'); 
         }
@@ -292,7 +310,7 @@
             document.getElementById('propStatus').value = item.status;
             document.getElementById('propArea').value = item.area;
             document.getElementById('propLocation').value = item.location;
-            document.getElementById('propImage').value = item.image;
+            document.getElementById('propImageBase64').value = item.image;
             document.getElementById('propDesc').value = item.desc;
             document.getElementById('modalTitle').textContent = 'İlanı Düzenle';
             document.getElementById('propertyModal').classList.add('active');
@@ -301,6 +319,18 @@
         function saveProperty(e) {
             e.preventDefault();
             const id = document.getElementById('propId').value;
+            const customImage = document.getElementById('propImageBase64').value;
+            
+            let finalImage = customImage;
+            if (!finalImage) {
+                if (id) {
+                    const existing = listings.find(p => p.id == id);
+                    finalImage = existing ? existing.image : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                } else {
+                    finalImage = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                }
+            }
+
             const obj = {
                 id: id ? parseInt(id) : Date.now(),
                 title: document.getElementById('propTitle').value,
@@ -309,9 +339,10 @@
                 status: document.getElementById('propStatus').value,
                 area: document.getElementById('propArea').value,
                 location: document.getElementById('propLocation').value,
-                image: document.getElementById('propImage').value,
+                image: finalImage,
                 desc: document.getElementById('propDesc').value
             };
+
             if (id) { 
                 const idx = listings.findIndex(p => p.id == id); 
                 listings[idx] = obj; 
