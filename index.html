@@ -38,12 +38,11 @@
         }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         
-        .logo-box { display: flex; align-items: center; text-decoration: none; }
+        .logo-box { display: flex; align-items: center; text-decoration: none; cursor: pointer; user-select: none; }
         .logo-svg { height: 50px; width: auto; }
         
         .admin-controls { display: flex; gap: 10px; align-items: center; }
         .add-btn { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; border: none; padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.85rem; cursor: pointer; display: none; }
-        .admin-toggle-btn { background: var(--bg-input); color: var(--gold-primary); border: 1px solid var(--gold-dark); font-weight: 600; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.85rem; cursor: pointer; }
         
         .container { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
         .info-banner { background: rgba(212, 175, 55, 0.08); border: 1px solid var(--gold-dark); border-radius: var(--radius-main); padding: 16px; margin-bottom: 24px; display: none; }
@@ -93,8 +92,8 @@
 
     <header>
         <div class="nav-container">
-            <a href="#" class="logo-box">
-                <!-- Birebir Görseldeki TANEV GYO Logosu -->
+            <!-- Logoya basılı tutunca gizli giriş çalışacak -->
+            <div class="logo-box" id="secretLogo" title="TANEV GYO">
                 <svg class="logo-svg" viewBox="0 0 380 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="Symbol">
                         <path d="M 10 18 C 10 18, 55 18, 75 18 C 65 30, 52 42, 32 60 C 22 70, 20 85, 20 85 C 20 85, 30 65, 45 50 C 65 30, 85 18, 85 18 L 10 18 Z" fill="url(#gold-grad)"/>
@@ -112,19 +111,18 @@
                         </linearGradient>
                     </defs>
                 </svg>
-            </a>
+            </div>
             
             <div class="admin-controls">
                 <button class="add-btn" id="addBtn" onclick="openModal()">+ İlan Ekle</button>
-                <button class="admin-toggle-btn" id="adminToggleBtn" onclick="toggleAdmin()">🔒 Yönetici Girişi</button>
             </div>
         </div>
     </header>
 
     <div class="container">
         <div class="info-banner" id="infoBanner">
-            <div class="info-title">📌 Yönetici Paneli Aktif</div>
-            <div class="info-text">Şu an yönetim modundasınız. Yeni ilan ekleyebilir veya mevcut ilanları düzenleyip silebilirsiniz.</div>
+            <div class="info-title">📌 Yönetici Modu Aktif</div>
+            <div class="info-text">Şu an yönetim yetkilisiniz. İlan ekleyebilir, düzenleyebilir veya silebilirsiniz.</div>
         </div>
         <div class="listings-grid" id="listingsGrid"></div>
     </div>
@@ -196,37 +194,47 @@
 
         function updateAdminUI() {
             const addBtn = document.getElementById('addBtn');
-            const adminToggleBtn = document.getElementById('adminToggleBtn');
             const infoBanner = document.getElementById('infoBanner');
             
             if (isAdmin) {
                 addBtn.style.display = 'block';
-                adminToggleBtn.textContent = '🔓 Yöneticiyi Kapat';
-                adminToggleBtn.style.borderColor = 'var(--accent-green)';
-                adminToggleBtn.style.color = 'var(--accent-green)';
                 infoBanner.style.display = 'block';
             } else {
                 addBtn.style.display = 'none';
-                adminToggleBtn.textContent = '🔒 Yönetici Girişi';
-                adminToggleBtn.style.borderColor = 'var(--gold-dark)';
-                adminToggleBtn.style.color = 'var(--gold-primary)';
                 infoBanner.style.display = 'none';
             }
             renderListings();
         }
 
-        function toggleAdmin() {
+        // Gizli Giriş: Logoya 2 saniye basılı tutunca çalışır
+        const secretLogo = document.getElementById('secretLogo');
+        let pressTimer;
+        
+        secretLogo.addEventListener('touchstart', () => {
+            pressTimer = setTimeout(() => { triggerAdminLogin(); }, 2000);
+        });
+        secretLogo.addEventListener('touchend', () => { clearTimeout(pressTimer); });
+        
+        // Bilgisayardan bakanlar için sağ tık veya uzun basma alternatifi
+        secretLogo.addEventListener('mousedown', () => {
+            pressTimer = setTimeout(() => { triggerAdminLogin(); }, 2000);
+        });
+        secretLogo.addEventListener('mouseup', () => { clearTimeout(pressTimer); });
+
+        function triggerAdminLogin() {
             if (isAdmin) {
-                isAdmin = false;
-                localStorage.setItem('tanev_admin', 'false');
-                alert('Yönetici oturumu kapatıldı.');
-                updateAdminUI();
+                if (confirm('Yönetici oturumunu kapatmak istiyor musunuz?')) {
+                    isAdmin = false;
+                    localStorage.setItem('tanev_admin', 'false');
+                    alert('Yönetici oturumu kapatıldı.');
+                    updateAdminUI();
+                }
             } else {
                 const password = prompt('Yönetici şifresini giriniz:');
                 if (password === 'tanev2727') {
                     isAdmin = true;
                     localStorage.setItem('tanev_admin', 'true');
-                    alert('Giriş başarılı! İlan yönetim araçları açıldı.');
+                    alert('Giriş başarılı! Yönetici araçları açıldı.');
                     updateAdminUI();
                 } else if (password !== null) {
                     alert('Hatalı şifre!');
