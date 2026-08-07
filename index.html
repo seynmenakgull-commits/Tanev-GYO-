@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TANEV GYO | Gayrimenkul & Portföy Yönetimi</title>
+    <title>www.TanevGYO.com | Gayrimenkul & Portföy Yönetimi</title>
     <meta name="theme-color" content="#121212">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +26,9 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-main); color: var(--text-white); padding-bottom: 40px; }
-        header { background: rgba(18, 18, 20, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 12px 16px; }
+        header { background: rgba(18, 18, 20, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 14px 16px; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo-box { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-        .logo-svg { height: 48px; width: auto; }
+        .site-domain { font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--gold-light), var(--gold-primary), var(--gold-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
         .add-btn { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: 700; border: none; padding: 10px 18px; border-radius: var(--radius-sm); font-size: 0.9rem; cursor: pointer; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
         .info-banner { background: rgba(212, 175, 55, 0.08); border: 1px solid var(--gold-dark); border-radius: var(--radius-main); padding: 16px; margin-bottom: 24px; }
@@ -70,24 +69,7 @@
 <body>
     <header>
         <div class="nav-container">
-            <a href="#" class="logo-box">
-                <svg class="logo-svg" viewBox="0 0 340 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="Logo-Mark">
-                        <path d="M10 10 H70 L60 22 H30 L30 24 L58 24 L48 36 H30 L18 62 H6 L18 32 H10 V10 Z" fill="url(#gold-grad)"/>
-                    </g>
-                    <g id="Logo-Text">
-                        <text x="80" y="42" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-weight="900" font-size="26" letter-spacing="1">TANEV GYO</text>
-                        <line x1="80" y1="52" x2="235" y2="52" stroke="url(#gold-grad)" stroke-width="3" stroke-linecap="round"/>
-                    </g>
-                    <defs>
-                        <linearGradient id="gold-grad" x1="0" y1="0" x2="100" y2="70" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stop-color="#F3E5AB"/>
-                            <stop offset="50%" stop-color="#D4AF37"/>
-                            <stop offset="100%" stop-color="#AA8625"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </a>
+            <a href="#" class="site-domain">www.TanevGYO.com</a>
             <button class="add-btn" onclick="openModal()">+ İlan Ekle</button>
         </div>
     </header>
